@@ -3,18 +3,29 @@ const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
 
-
 connectDB();
 
 const app = express();
-app.use(cors());
+
+/* ✅ CORS CONFIG */
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://imdbfront-end.netlify.app"
+  ],
+  credentials: true
+}));
+
+
 app.use(express.json());
+
+/* ROUTES */
 app.use("/auth", require("./routes/authRoutes"));
-
-
 app.use("/movies", require("./routes/movieRoutes"));
-app.use("/auth", require("./routes/authRoutes"));
 
+/* ✅ RAILWAY PORT FIX */
+const PORT = process.env.PORT || 5000;
 
-app.listen(5000, () => console.log("Server running on 5000"));
-
+app.listen(PORT, () =>
+  console.log(`Server running on port ${PORT}`)
+);
