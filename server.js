@@ -7,7 +7,6 @@ connectDB();
 
 const app = express();
 
-/* ✅ CORS CONFIG */
 // app.use(cors({
 //   origin: [
 //     "http://localhost:5173",
@@ -18,13 +17,12 @@ const app = express();
 // }));
 
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://imdbfront-end.netlify.app"
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: "https://imdbfront-end.netlify.app",
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
 
 
 
