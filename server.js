@@ -42,39 +42,43 @@ const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
 
+// Connect to MongoDB
 connectDB();
 
 const app = express();
 
+// Allow CORS for frontend and Railway (dynamic origin handling)
 app.use(cors({
-  origin: "https://imdbfront-end.netlify.app",
+  origin: process.env.NODE_ENV === "production"
+    ? "*" // or your frontend URL
+    : "http://localhost:3000", 
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
+// JSON parsing
 app.use(express.json());
 
-/* 🔎 TEMP: Health check */
+// 🔎 Health check
 app.get("/", (req, res) => {
   res.status(200).send("Backend is running 🚀");
 });
 
-/* 🔎 TEMP: Request logger */
+// 🔎 Request logger
 app.use((req, res, next) => {
   console.log("➡️", req.method, req.url);
   next();
 });
 
-/* ROUTES */
+// ROUTES
 app.use("/auth", require("./routes/authRoutes"));
 app.use("/movies", require("./routes/movieRoutes"));
 
-/* PORT */
+// PORT
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () =>
+// Listen on all interfaces (important for Railway)
+app.listen(PORT, "0.0.0.0", () =>
   console.log(`Server running on port ${PORT}`)
 );
-
-
