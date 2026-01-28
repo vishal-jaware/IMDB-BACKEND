@@ -9,7 +9,7 @@
 This is the **backend REST API** for the IMDB Clone application, built using **Node.js, Express, and MongoDB**.  
 It handles authentication, movie management, and database operations.
 
-🔗 **Live API**: https://your-railway-domain.up.railway.app
+🔗 **Live API**: https://imdb-backend-production.up.railway.app/
 
 ---
 
